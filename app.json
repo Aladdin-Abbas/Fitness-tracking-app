@@ -1,0 +1,38 @@
+{
+  "expo": {
+    "name": "react-native-19-feb",
+    "slug": "react-native-19-feb",
+    "version": "1.0.0",
+    "orientation": "default",
+    "icon": "./assets/splash-icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.alaaabbas.reactnative19feb",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.alaaabbas.reactnative19feb"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "7a36681d-65be-4792-9524-b09f9eb51e46"
+      }
+    }
+  }
+}
