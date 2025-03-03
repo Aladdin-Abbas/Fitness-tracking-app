@@ -26,8 +26,7 @@ Before you begin, ensure you have the following installed:
 
 1. Clone the repository:
 ```bash
-git clone [repository-url]
-cd react-native-19-feb
+git clone https://github.com/Aladdin-Abbas/Fitness-tracking-app.git
 ```
 
 2. Install dependencies:
