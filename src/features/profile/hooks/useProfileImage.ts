@@ -1,15 +1,22 @@
 import { useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
+import { useFitness } from '../../../context/FitnessContext';
 
-export const useProfileImage = () => {
+type UseProfileImage = boolean | undefined
+
+export const useProfileImage = (isUpdating:UseProfileImage = false) => {
   const [image, setImage] = useState<string | null>(null);
-
+  const { updateUserImage } = useFitness();
   const pickImage = async () => {
-    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    let { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     
     if (status !== 'granted') {
-      alert('Sorry, we need camera roll permissions to make this work!');
-      return;
+      const { status: retryStatus } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (retryStatus !== 'granted') {
+        alert('We need camera roll permissions to add a profile photo.');
+        return;
+      }
+      status = retryStatus;
     }
 
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -21,7 +28,10 @@ export const useProfileImage = () => {
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
+      isUpdating && updateUserImage(result.assets[0].uri)
     }
+
+    
   };
 
   return {

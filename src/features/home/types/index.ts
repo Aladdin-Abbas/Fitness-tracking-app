@@ -20,7 +20,7 @@ export interface ActivityCardProps {
   type: string;
   duration: string;
   calories: number;
-  time?: string;
+  date: string;
 }
 
 export interface DashboardCardProps {

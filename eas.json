@@ -1,7 +1,15 @@
 {
     "build": {
-      "preview": {
+        "preview": {
+          "distribution": "internal"
+        },
+      "production": {
+        "developmentClient": false,
         "distribution": "internal"
+      },
+      "development": {
+        "distribution": "internal",
+        "developmentClient": true
       }
     }
 }

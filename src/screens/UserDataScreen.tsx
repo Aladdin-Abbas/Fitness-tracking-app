@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { Text, TextInput, Button } from 'react-native-paper';
-import * as ImagePicker from 'expo-image-picker';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../navigation/types';
 import { useFitness } from '../context/FitnessContext';
+import { useProfileImage } from '../features/profile/hooks/useProfileImage';
 
 type UserDataScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'UserData'>;
 
@@ -16,7 +16,8 @@ export const UserDataScreen = () => {
   const [height, setHeight] = useState('');
   const [weight, setWeight] = useState('');
   const [dailyGoal, setDailyGoal] = useState('');
-  const [image, setImage] = useState<string | null>(null);
+  const { image, pickImage } = useProfileImage();
+
   type FormErrors = {
     firstName: string;
     lastName: string;
@@ -33,25 +34,6 @@ export const UserDataScreen = () => {
     dailyGoal: ''
   });
 
-  const pickImage = async () => {
-    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    
-    if (status !== 'granted') {
-      alert('Sorry, we need camera roll permissions to make this work!');
-      return;
-    }
-
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [1, 1],
-      quality: 1,
-    });
-
-    if (!result.canceled) {
-      setImage(result.assets[0].uri);
-    }
-  };
 
   const validateForm = () => {
     const newErrors = {

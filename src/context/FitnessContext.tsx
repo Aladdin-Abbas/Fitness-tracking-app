@@ -28,6 +28,7 @@ type FitnessContextType = {
   updateDailySteps: (steps: number) => void;
   updateDailyGoal: (goal: number) => void;
   updateUserProfile: (profile: UserProfile) => void;
+  updateUserImage:(img:string) => void;
 };
 
 const FitnessContext = createContext<FitnessContextType | null>(null);
@@ -119,6 +120,15 @@ export const FitnessProvider: React.FC<{ children: React.ReactNode }> = ({ child
     }
   };
 
+  const updateUserImage = async (img: string) => {
+    try {
+      setUserProfile((prevProfile) => ({...prevProfile,image:img} as UserProfile ));
+      await AsyncStorage.setItem('userProfile', JSON.stringify({...userProfile,image:img}));
+    } catch (error) {
+      console.error('Error updating user profile:', error);
+    }
+  };
+
   return (
     <FitnessContext.Provider
       value={{
@@ -130,6 +140,7 @@ export const FitnessProvider: React.FC<{ children: React.ReactNode }> = ({ child
         updateDailySteps,
         updateDailyGoal,
         updateUserProfile,
+        updateUserImage
       }}
     >
       {children}

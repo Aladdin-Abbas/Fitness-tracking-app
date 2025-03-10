@@ -27,6 +27,7 @@ export const HomeScreen = () => {
             type={activity.type}
             duration={activity.duration}
             calories={activity.calories}
+            date={activity.date}
           />
         ))}
       </View>

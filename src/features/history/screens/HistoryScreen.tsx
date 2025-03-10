@@ -84,16 +84,21 @@ export const HistoryScreen = () => {
     }
   }, [searchQuery]);
 
-
+  
   const filteredActivities = useMemo(() => 
-    activities.filter(
-      activity =>
-        (!selectedDate || activity.date === selectedDate) &&
-        (!searchQuery ||
-          activity.type.toLowerCase().includes(searchQuery.toLowerCase()))
-    ),
+    activities.filter(activity => {
+      if (!selectedDate && !searchQuery) return true;
+      
+      const activityDate = new Date(activity.date).toISOString().split('T')[0];
+      const dateMatch = !selectedDate || activityDate === selectedDate;
+      const searchMatch = !searchQuery || 
+        activity.type.toLowerCase().includes(searchQuery.toLowerCase());
+      
+      return dateMatch && searchMatch;
+    }),
     [activities, selectedDate, searchQuery]
   );
+
   const handleExport = async () => {
     try {
       await exportToCSV(filteredActivities);
@@ -132,7 +137,9 @@ export const HistoryScreen = () => {
           </Card>
 
           <Calendar
-            onDayPress={(day: { dateString: React.SetStateAction<string>; }) => setSelectedDate(day.dateString)}
+            onDayPress={(day: { dateString: React.SetStateAction<string>; }) => {
+              setSelectedDate(day.dateString === selectedDate ? '' : day.dateString);
+            }}
             markedDates={{
               ...markedDates,
               [selectedDate]: { selected: true, marked: markedDates[selectedDate]?.marked }

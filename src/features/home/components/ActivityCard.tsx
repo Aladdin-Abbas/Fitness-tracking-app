@@ -9,9 +9,20 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
   type,
   duration,
   calories,
-  time = '9:30 AM'
+  date 
 }) => {
   const dimensions = useWindowDimensions();
+
+  const formatTime = (dateString: string) => {
+    if (!dateString) return '--:--';
+    
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return '--:--';
+
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  };
+
+  const time = formatTime(date)
 
   return (
     <Surface

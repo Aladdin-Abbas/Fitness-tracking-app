@@ -9,7 +9,7 @@ export const ProfileScreen = () => {
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [newGoal, setNewGoal] = useState('');
   const { dailyGoal, updateDailyGoal, userProfile } = useFitness();
-  const { image, pickImage } = useProfileImage();
+  const { image, pickImage } = useProfileImage(true);
 
   return (
     <ScrollView style={styles.container}>
